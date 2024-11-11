@@ -1,25 +1,44 @@
-import logo from './logo.svg';
-import './App.css';
+// src/App.js
+import React from 'react';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import FormComponent from './formComponent';
+import TableComponent from './tableComponent';
+import Registration from './Registration';
+import Login from './login';
+import { GlobalProvider, useGlobalContext } from './GlobalState';
 
-function App() {
+const App = () => {
+  const { formData, addFormData } = useGlobalContext();
+
+  const handleFormSubmit = (data) => {
+    addFormData(data);
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>    
+      <div className="app-container">
+        <header className="header">
+          <h1>ReactJs Web App</h1>
+        </header>
+        <main className="main-content">
+        {/* <h1>Form Application</h1> */}
+        <Routes>
+          <Route path="/" element={<Registration />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/form" element={<FormComponent onSubmit={handleFormSubmit} />} />
+          <Route path="/table" element={<TableComponent data={formData} />} />
+        </Routes>
+        </main>
+        <footer className="footer">
+          <p>Developed By: Kishan Mehta&nbsp;</p>
+        </footer>
+      </div>
+    </Router>
   );
-}
+};
 
-export default App;
+export default () => (
+  <GlobalProvider>
+    <App />
+  </GlobalProvider>
+);
