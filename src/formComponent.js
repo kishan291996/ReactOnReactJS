@@ -25,6 +25,7 @@ const FormComponent = ({ onSubmit }) => {
   };
 
   return (
+    <>
     <form onSubmit={handleSubmit}>
     <h1>Fill Application Form</h1>
       <input name="name" value={formData.name} onChange={handleChange} placeholder="Name" required />
@@ -33,7 +34,8 @@ const FormComponent = ({ onSubmit }) => {
       <input name="address" value={formData.address} onChange={handleChange} placeholder="Address" required />
       <input name="phone" value={formData.phone} onChange={handleChange} placeholder="Phone" required />
       <button type="submit">Submit</button>
-    </form>    
+    </form> 
+    </>   
   );
 };
 

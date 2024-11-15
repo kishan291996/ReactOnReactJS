@@ -10,7 +10,7 @@ const TableComponent = ({ data }) => {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-   
+
     fetchData();
   }, []);
   const fetchData = async () => {
@@ -36,7 +36,7 @@ const TableComponent = ({ data }) => {
   if (error) return <p>Error loading data: {error.message}</p>;
 
   return (
-    <div>     
+    <React.Fragment>
       <h1>Detail</h1>
       <form onSubmit={handlePost}>
         <input type="text" value={newPost.title} onChange={e => setNewPost({ ...newPost, title: e.target.value })} placeholder="Title" />
@@ -67,9 +67,14 @@ const TableComponent = ({ data }) => {
       <div>
 
         <h1>Data from API</h1>
-        <table> <thead> <tr> <th>Title</th> <th>Body</th> </tr> </thead> <tbody> {data1.map((item, index) => (<tr key={index}> <td>{item.id}</td> <td>{item.title}</td> </tr>))} </tbody> </table>
+        <table>
+          <thead>
+            <tr> <th>Title</th> <th>Body</th> </tr>
+          </thead>
+          <tbody> {data1.map((item, index) => (<tr key={index}> <td>{item.id}</td> <td>{item.title}</td> </tr>))} </tbody>
+        </table>
       </div>
-    </div>
+    </React.Fragment>
 
 
   );
