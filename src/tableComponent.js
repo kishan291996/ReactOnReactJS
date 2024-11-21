@@ -2,8 +2,11 @@
 import React, { useState, useEffect } from 'react';
 // import React from 'react';
 import { getData, postData } from './services/apiServices'
+import { useSelector } from 'react-redux';
 
 const TableComponent = ({ data }) => {
+  const records = useSelector(state => state.records);
+
   const [data1, setData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [newPost, setNewPost] = useState({ title: '', body: '' });
@@ -74,6 +77,12 @@ const TableComponent = ({ data }) => {
           <tbody> {data1.map((item, index) => (<tr key={index}> <td>{item.id}</td> <td>{item.title}</td> </tr>))} </tbody>
         </table>
       </div>
+
+      {records.map(record => (
+          <li key={record.id}>
+            {record.name} - {record.email} - {record.contactNo} - {record.selectedEmployee} - {record.address}            
+          </li>
+        ))}
     </React.Fragment>
 
 
