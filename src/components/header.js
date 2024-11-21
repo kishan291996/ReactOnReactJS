@@ -1,7 +1,7 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 
-const menuItems = [ { name: 'Home', path: '/', exact: true }, { name: 'About', path: '/about' }, { name: 'Services', path: '/services' }, { name: 'Contact', path: '/contact' } ];
+const menuItems = [ { name: 'Register', path: '/', exact: true }, { name: 'Home', path: 'home' }, { name: 'About', path: '/about' }, { name: 'Services', path: '/services' }, { name: 'Contact', path: '/contact' }, { name: 'Admin', path: '/login' } ];
 
 const Header = () => {
   return (

@@ -117,3 +117,8 @@ li i { cursor: pointer; margin-left: 10px; font-size: 20px; color: #6584c5; }
 
 li i:hover { color: red; }
 
+
+.max-w-md {
+  width: 65%;
+  max-width: 100%;
+}

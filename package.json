@@ -59,5 +59,6 @@
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/kishan291996/ReactOnReactJS/issues"
-  }  
+  },
+  "homepage": "."  
 }
