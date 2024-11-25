@@ -7,6 +7,7 @@ const app = express();
 const PORT = 5000;
 const filePathContact = path.join(__dirname, 'contacts.json');
 const usersFilePath = path.join(__dirname, 'users.json');
+const projectPath = path.join(__dirname, 'projects.json');
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -31,6 +32,7 @@ const initializeFile = async ( filePath ) => {
 
 initializeFile(filePathContact);
 initializeFile(usersFilePath);
+initializeFile(projectPath);
 
 app.post('/api/contact', async (req, res) => {
   const data = req.body;
@@ -65,6 +67,42 @@ app.post('/api/register', async (req, res) => { const { username, password } = r
 
 app.post('/api/login', async (req, res) => { const { username, password } = req.body; try { const fileData = await fs.readFile(usersFilePath, 'utf8'); const users = fileData ? JSON.parse(fileData) : []; const user = users.find(user => user.username === username && user.password === password); if (user) { res.status(200).send('Login successful'); } else { res.status(401).send('Invalid username or password'); } } catch (err) { console.error('Error processing login data:', err); res.status(500).send('Error logging in user'); } });
 // All other GET requests not handled before will return the React app
+
+
+app.post('/api/addProject', async (req, res) => {
+  const data = req.body;
+
+  try {
+    let project = [];
+    try {
+      const fileData = await fs.readFile(projectPath, 'utf8');
+      console.log("Read file data: ===>", fileData); // Detailed logging
+      project = fileData ? JSON.parse(fileData) : [];
+    } catch (err) {
+      console.error('Error reading or parsing project.json:', err);
+      // Initialize with an empty array if parsing fails
+      project = [];
+    }
+
+    project.push(data);
+
+    await fs.writeFile(projectPath, JSON.stringify(project, null, 2));    
+    res.status(200).send('Project details submitted successfully!');
+  } catch (err) {
+    console.error('Error processing contact data:', err);
+    res.status(500).send('Error saving contact data');
+  }
+});
+
+
+app.get('/api/projectList', async (req, res) => { try { const fileData = await fs.readFile(projectPath, 'utf8'); const contacts = fileData ? JSON.parse(fileData) : []; res.status(200).json(contacts); } catch (err) { console.error('Error fetching contact data:', err); res.status(500).send('Error fetching contact data'); } });
+
+
+app.post('/api/updateProject', async (req, res) => { const updatedProject = req.body; try { const fileData = await fs.readFile(projectPath, 'utf8'); let projects = fileData ? JSON.parse(fileData) : []; projects = projects.map(project => project.id === updatedProject.id ? updatedProject : project); await fs.writeFile(projectPath, JSON.stringify(projects, null, 2)); res.status(200).json(updatedProject); } catch (err) { console.error('Error updating project data:', err); res.status(500).send('Error updating project data'); } });
+
+
+app.post('/api/deleteProject', async (req, res) => { const { id } = req.body; try { const fileData = await fs.readFile(projectPath, 'utf8'); let projects = fileData ? JSON.parse(fileData) : []; projects = projects.filter(project => project.id !== id); await fs.writeFile(projectPath, JSON.stringify(projects, null, 2)); res.status(200).send('Project deleted successfully'); } catch (err) { console.error('Error deleting project:', err); res.status(500).send('Error deleting project'); } });
+
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, 'build', 'index.html'));
 });

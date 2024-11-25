@@ -22,6 +22,7 @@ import { isAuthenticated } from './components/authService';
 import Admin from './components/admin';
 import Register from './components/registerUser';
 import LoginU from './components/loginUser';
+import CreateProject from './components/create-projects';
 
 const App = () => {
   const [loggedIn, setLoggedIn] = useState(isAuthenticated()); const handleLogin = () => { setLoggedIn(true); }; const handleLogout = () => { localStorage.removeItem('admin'); setLoggedIn(false); };
@@ -49,6 +50,7 @@ const App = () => {
             <Route path="/about" element={<About />} />
             <Route path="/services" element={<Services />} />
             <Route path="/contact" element={<Contact />} />
+            <Route path="/create-project" element={<CreateProject />} />
             <Route path="/login" element={<Login onLogin={handleLogin} />} />
             <Route path="/admin" element={loggedIn ? <Admin onLogout={handleLogout} /> : <Navigate to="/login" />} />
             {/* <Route path="/" element={<ValidatedForm />} /> */}

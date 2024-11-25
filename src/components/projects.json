@@ -1,0 +1,29 @@
+[
+  {
+    "id": 1,
+    "name": "People First",
+    "type": "Web",
+    "frontend": "Angular, ReactJs",
+    "backend": "NodeJS",
+    "database": "MySQL",
+    "developedBy": "Kishan "
+  },
+  {
+    "id": 2,
+    "name": "Lafarge",
+    "type": "Web",
+    "frontend": "Ionic",
+    "backend": "Java",
+    "database": "MySQL",
+    "developedBy": "Kishan"
+  },
+  {
+    "id": 3,
+    "name": "Customer Portal - Easy Build",
+    "type": "Web",
+    "frontend": "Angular, Ionic",
+    "backend": "Java",
+    "database": "MySQL",
+    "developedBy": "Kishan"
+  }
+]
