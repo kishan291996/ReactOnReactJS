@@ -8,6 +8,7 @@ const PORT = 5000;
 const filePathContact = path.join(__dirname, 'contacts.json');
 const usersFilePath = path.join(__dirname, 'users.json');
 const projectPath = path.join(__dirname, 'projects.json');
+const tasksPath = path.join(__dirname, 'tasks.json');
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -102,6 +103,11 @@ app.post('/api/updateProject', async (req, res) => { const updatedProject = req.
 
 
 app.post('/api/deleteProject', async (req, res) => { const { id } = req.body; try { const fileData = await fs.readFile(projectPath, 'utf8'); let projects = fileData ? JSON.parse(fileData) : []; projects = projects.filter(project => project.id !== id); await fs.writeFile(projectPath, JSON.stringify(projects, null, 2)); res.status(200).send('Project deleted successfully'); } catch (err) { console.error('Error deleting project:', err); res.status(500).send('Error deleting project'); } });
+
+app.post('/api/addTask', async (req, res) => { const { projectId, task, assignedTo, status } = req.body; try { let tasks = []; try { const fileData = await fs.readFile(tasksPath, 'utf8'); tasks = fileData ? JSON.parse(fileData) : []; } catch (err) { console.error('Error reading or parsing tasks.json:', err); tasks = []; } tasks.push({ projectId, task, assignedTo, status }); await fs.writeFile(tasksPath, JSON.stringify(tasks, null, 2)); res.status(200).json({ message: 'Task added successfully!' }); } catch (err) { console.error('Error adding task:', err); res.status(500).json({ error: 'Error adding task' }); } });
+
+app.get('/api/tasks', async (req, res) => { const { projectId } = req.query; try { const fileData = await fs.readFile(tasksPath, 'utf8'); let tasks = fileData ? JSON.parse(fileData) : []; tasks = tasks.filter(task => task.projectId === Number(projectId)); res.status(200).json(tasks); } catch (err) { console.error('Error fetching tasks:', err); res.status(500).json({ error: 'Error fetching tasks' }); } });
+
 
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, 'build', 'index.html'));

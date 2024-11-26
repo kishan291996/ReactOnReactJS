@@ -1,0 +1,26 @@
+[
+  {
+    "projectId": 1,
+    "task": "Adding Task 1",
+    "assignedTo": "A",
+    "status": "Active"
+  },
+  {
+    "projectId": 1,
+    "task": "Adding Task 2 ",
+    "assignedTo": "Developer 2",
+    "status": "Closed"
+  },
+  {
+    "projectId": 2,
+    "task": "Task 1",
+    "assignedTo": "Developer 1",
+    "status": "In Progress"
+  },
+  {
+    "projectId": 2,
+    "task": "Task 2",
+    "assignedTo": "Developer 2",
+    "status": "Closed"
+  }
+]
