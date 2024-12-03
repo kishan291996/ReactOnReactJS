@@ -26,6 +26,7 @@ import CreateProject from './components/create-projects';
 import ProjectDetails from './components/projectDetails';
 import TaskStatus from './components/taskStatus';
 import DeveloperTaskStats from './components/developerTaskStatusView';
+import MainComponent from './components/employeeMain';
 
 const App = () => {
   const [loggedIn, setLoggedIn] = useState(isAuthenticated()); const handleLogin = () => { setLoggedIn(true); }; const handleLogout = () => { localStorage.removeItem('admin'); setLoggedIn(false); };
@@ -57,6 +58,7 @@ const App = () => {
             <Route path="/projectDetails" element={<ProjectDetails />} />
             <Route path="/task-status" element={<TaskStatus />} />
             <Route path="/taskViewStatus" element={<DeveloperTaskStats />} />
+            <Route path="/employeeMain" element={<MainComponent />} />
             <Route path="/login" element={<Login onLogin={handleLogin} />} />
             <Route path="/admin" element={loggedIn ? <Admin onLogout={handleLogout} /> : <Navigate to="/login" />} />
             {/* <Route path="/" element={<ValidatedForm />} /> */}

@@ -1,0 +1,11 @@
+[
+  {
+    "id": 1,
+    "name": "Test",
+    "contact": "0192019201",
+    "email": "asdaks@gamil.com",
+    "skills": "Angular",
+    "assignedProject": "Laferge",
+    "manager": "Testing 1"
+  }
+]

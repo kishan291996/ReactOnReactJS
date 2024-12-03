@@ -9,6 +9,7 @@ const filePathContact = path.join(__dirname, 'contacts.json');
 const usersFilePath = path.join(__dirname, 'users.json');
 const projectPath = path.join(__dirname, 'projects.json');
 const tasksPath = path.join(__dirname, 'tasks.json');
+const employeePath = path.join(__dirname, 'employeeDetails.json');
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -34,6 +35,7 @@ const initializeFile = async ( filePath ) => {
 initializeFile(filePathContact);
 initializeFile(usersFilePath);
 initializeFile(projectPath);
+initializeFile(employeePath);
 
 app.post('/api/contact', async (req, res) => {
   const data = req.body;
@@ -107,6 +109,10 @@ app.post('/api/deleteProject', async (req, res) => { const { id } = req.body; tr
 app.post('/api/addTask', async (req, res) => { const { projectId, task, assignedTo, status } = req.body; try { let tasks = []; try { const fileData = await fs.readFile(tasksPath, 'utf8'); tasks = fileData ? JSON.parse(fileData) : []; } catch (err) { console.error('Error reading or parsing tasks.json:', err); tasks = []; } tasks.push({ projectId, task, assignedTo, status }); await fs.writeFile(tasksPath, JSON.stringify(tasks, null, 2)); res.status(200).json({ message: 'Task added successfully!' }); } catch (err) { console.error('Error adding task:', err); res.status(500).json({ error: 'Error adding task' }); } });
 
 app.get('/api/tasks', async (req, res) => { const { projectId } = req.query; try { const fileData = await fs.readFile(tasksPath, 'utf8'); let tasks = fileData ? JSON.parse(fileData) : []; tasks = tasks.filter(task => task.projectId === Number(projectId)); res.status(200).json(tasks); } catch (err) { console.error('Error fetching tasks:', err); res.status(500).json({ error: 'Error fetching tasks' }); } });
+
+app.post('/api/addEmployee', async (req, res) => { const { name, contact, email, skills, assignedProject, manager } = req.body; try { let employees = []; try { const fileData = await fs.readFile(employeePath, 'utf8'); employees = fileData ? JSON.parse(fileData) : []; } catch (err) { console.error('Error reading or parsing employeeDetails.json:', err); employees = []; } employees.push({ id: employees.length + 1, name, contact, email, skills, assignedProject, manager }); await fs.writeFile(employeePath, JSON.stringify(employees, null, 2)); res.status(200).json({ message: 'Employee added successfully!' }); } catch (err) { console.error('Error adding employee:', err); res.status(500).json({ error: 'Error adding employee' }); } });
+
+app.get('/api/employees', async (req, res) => { try { const fileData = await fs.readFile(employeePath, 'utf8'); const employees = fileData ? JSON.parse(fileData) : []; res.status(200).json(employees); } catch (err) { console.error('Error fetching employees:', err); res.status(500).json({ error: 'Error fetching employees' }); } });
 
 
 app.get('*', (req, res) => {
